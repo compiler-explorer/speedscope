@@ -445,6 +445,12 @@ export class Application extends StatelessComponent<ApplicationProps> {
       const script = document.createElement('script')
       script.src = `file:///${this.props.hashParams.localProfilePath}`
       document.head.appendChild(script)
+    } else if (this.props.hashParams.b64data) {
+      const data = this.props.hashParams.b64data;
+      const filename = this.props.hashParams.customFilename || 'flamegraph.txt';
+      this.loadProfile(async () => {
+        return await importProfilesFromArrayBuffer(filename, data);
+      });
     }
   }
 
